@@ -3,23 +3,12 @@ package config
 import (
 	"fmt"
 	"time"
+	"wget-go/internal/domain"
 )
 
-// Config содержит конфигурацию приложения
-type Config struct {
-	URL           string
-	OutputDir     string
-	MaxDepth      int
-	Workers       int
-	RateLimit     int
-	UserAgent     string
-	Timeout       time.Duration
-	RespectRobots bool
-}
-
 // DefaultConfig возвращает конфигурацию по умолчанию
-func DefaultConfig() *Config {
-	return &Config{
+func DefaultConfig() *domain.Config {
+	return &domain.Config{
 		OutputDir:     "./download",
 		MaxDepth:      1,
 		Workers:       5,
@@ -31,7 +20,7 @@ func DefaultConfig() *Config {
 }
 
 // Validate проверяет корректность конфигурации
-func Validate(cfg *Config) error {
+func Validate(cfg *domain.Config) error {
 	if cfg.URL == "" {
 		return fmt.Errorf("URL is required")
 	}

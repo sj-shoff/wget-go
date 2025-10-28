@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"wget-go/internal/config"
+	"wget-go/internal/domain"
 )
 
 // Parser обрабатывает аргументы командной строки
@@ -16,7 +17,7 @@ func New() *Parser {
 }
 
 // Parse извлекает конфигурацию из флагов
-func (p *Parser) Parse() *config.Config {
+func (p *Parser) Parse() *domain.Config {
 	cfg := config.DefaultConfig()
 
 	flag.StringVar(&cfg.URL, "url", "", "URL to download (required)")

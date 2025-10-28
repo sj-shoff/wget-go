@@ -5,23 +5,33 @@ import (
 	"wget-go/internal/domain"
 )
 
-// Downloader определяет контракт для загрузки ресурсов
+// Downloader загружает ресурсы
 type Downloader interface {
 	Download(ctx context.Context, task domain.DownloadTask) (domain.DownloadResult, error)
 	DetermineResourceType(url string, contentType string) domain.ResourceType
 }
 
-// TaskProcessor обрабатывает задачи и возвращает новые
-type TaskProcessor interface {
-	Process(ctx context.Context, task domain.DownloadTask) (domain.DownloadResult, []domain.DownloadTask, error)
+// Extractor извлекает ссылки из контента
+type Extractor interface {
+	ExtractLinks(content []byte, baseURL string, contentType string) ([]string, error)
 }
 
-// HTMLLinkParser извлекает ссылки из HTML
-type HTMLLinkParser interface {
-	ExtractLinks(htmlContent []byte, baseURL string) ([]string, error)
+// HTMLParser парсит HTML контент
+type HTMLParser interface {
+	Parse(htmlContent []byte, baseURL string) ([]string, error)
 }
 
-// ContentParser определяет тип контента
-type ContentParser interface {
-	ParseContentType(url string, contentTypeHeader string) domain.ResourceType
+// Scheduler управляет процессом скачивания
+type Scheduler interface {
+	Start(ctx context.Context) error
+	Schedule(task domain.DownloadTask)
+	Stats() SchedulerStats
+}
+
+// SchedulerStats статистика планировщика
+type SchedulerStats struct {
+	TotalTasks     int
+	CompletedTasks int
+	FailedTasks    int
+	ActiveWorkers  int
 }
