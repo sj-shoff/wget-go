@@ -4,7 +4,6 @@ package storage
 type FileManager interface {
 	Save(filePath string, content []byte) error
 	Exists(filePath string) bool
-	CreateDir(path string) error
 }
 
 // LinkRewriter перезаписывает ссылки в контенте

@@ -8,7 +8,6 @@ import (
 // Downloader загружает ресурсы
 type Downloader interface {
 	Download(ctx context.Context, task domain.DownloadTask) (domain.DownloadResult, error)
-	DetermineResourceType(url string, contentType string) domain.ResourceType
 }
 
 // Extractor извлекает ссылки из контента
@@ -34,4 +33,5 @@ type SchedulerStats struct {
 	CompletedTasks int
 	FailedTasks    int
 	ActiveWorkers  int
+	PendingTasks   int
 }

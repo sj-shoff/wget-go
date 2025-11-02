@@ -1,7 +1,5 @@
 package domain
 
-import "time"
-
 // ResourceType определяет тип скачиваемого ресурса
 type ResourceType int
 
@@ -13,18 +11,6 @@ const (
 	ResourceFont
 	ResourceOther
 )
-
-// Config содержит конфигурацию приложения
-type Config struct {
-	URL           string
-	OutputDir     string
-	MaxDepth      int
-	Workers       int
-	RateLimit     int
-	UserAgent     string
-	Timeout       time.Duration
-	RespectRobots bool
-}
 
 // DownloadTask представляет задачу на скачивание
 type DownloadTask struct {

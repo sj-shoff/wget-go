@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"os"
 	"wget-go/internal/config"
-	"wget-go/internal/domain"
 )
 
 // Parser обрабатывает аргументы командной строки
@@ -17,11 +16,11 @@ func New() *Parser {
 }
 
 // Parse извлекает конфигурацию из флагов
-func (p *Parser) Parse() *domain.Config {
+func (p *Parser) Parse() *config.Config {
 	cfg := config.DefaultConfig()
 
 	flag.StringVar(&cfg.URL, "url", "", "URL to download (required)")
-	flag.StringVar(&cfg.OutputDir, "output", cfg.OutputDir, "Output directory")
+	flag.StringVar(&cfg.OutputDir, "output", "./download", "Output directory")
 	flag.IntVar(&cfg.MaxDepth, "depth", cfg.MaxDepth, "Maximum recursion depth")
 	flag.IntVar(&cfg.Workers, "workers", cfg.Workers, "Number of concurrent workers")
 	flag.IntVar(&cfg.RateLimit, "rate-limit", cfg.RateLimit, "Maximum requests per second")

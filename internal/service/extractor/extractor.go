@@ -12,8 +12,8 @@ type LinkExtractor struct {
 	cssURLRegex *regexp.Regexp
 }
 
-// NewLinkExtractor создает новый экземпляр LinkExtractor
-func NewLinkExtractor(htmlParser service.HTMLParser) *LinkExtractor {
+// New создает новый экземпляр LinkExtractor
+func New(htmlParser service.HTMLParser) *LinkExtractor {
 	return &LinkExtractor{
 		htmlParser:  htmlParser,
 		cssURLRegex: regexp.MustCompile(`url\(['"]?([^'")]+)['"]?\)`),
