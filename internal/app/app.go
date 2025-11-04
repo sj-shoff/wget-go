@@ -19,8 +19,6 @@ import (
 	"wget-go/internal/storage/file_manager"
 	"wget-go/internal/storage/link_rewriter"
 	"wget-go/internal/storage/path_resolver"
-
-	"wget-go/internal/config/flag_parser"
 )
 
 // Application основное приложение
@@ -31,7 +29,7 @@ type Application struct {
 
 // New создает и инициализирует приложение
 func New() *Application {
-	cfg := flag_parser.New().Parse()
+	cfg := config.MustLoad()
 
 	rateLimiter := ratelimiter.New(cfg.RateLimit)
 

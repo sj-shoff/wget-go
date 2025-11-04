@@ -1,24 +1,13 @@
-package flag_parser
+package config
 
 import (
 	"flag"
 	"fmt"
 	"os"
-	"wget-go/internal/config"
 )
 
-// Parser обрабатывает аргументы командной строки
-type Parser struct{}
-
-// New создает новый экземпляр Parser
-func New() *Parser {
-	return &Parser{}
-}
-
 // Parse извлекает конфигурацию из флагов
-func (p *Parser) Parse() *config.Config {
-	cfg := config.DefaultConfig()
-
+func parse(cfg Config) *Config {
 	flag.StringVar(&cfg.URL, "url", "", "URL to download (required)")
 	flag.StringVar(&cfg.OutputDir, "output", "./download", "Output directory")
 	flag.IntVar(&cfg.MaxDepth, "depth", cfg.MaxDepth, "Maximum recursion depth")
@@ -38,11 +27,5 @@ func (p *Parser) Parse() *config.Config {
 
 	flag.Parse()
 
-	if err := config.Validate(cfg); err != nil {
-		fmt.Fprintf(os.Stderr, "Configuration error: %v\n", err)
-		flag.Usage()
-		os.Exit(1)
-	}
-
-	return cfg
+	return &cfg
 }

@@ -2,6 +2,7 @@ package config
 
 import (
 	"fmt"
+	"log"
 	"time"
 )
 
@@ -17,8 +18,22 @@ type Config struct {
 	RespectRobots bool
 }
 
+func MustLoad() *Config {
+	cfg := *defaultConfig()
+
+	// Парсинг флагов
+	parsedCfg := parse(cfg)
+
+	// Валидация конфигурации
+	if err := validate(parsedCfg); err != nil {
+		log.Fatalf("Invalid configuration: %v", err)
+	}
+
+	return parsedCfg
+}
+
 // DefaultConfig возвращает конфигурацию по умолчанию
-func DefaultConfig() *Config {
+func defaultConfig() *Config {
 	return &Config{
 		OutputDir:     "./download",
 		MaxDepth:      1,
@@ -30,8 +45,8 @@ func DefaultConfig() *Config {
 	}
 }
 
-// Validate проверяет корректность конфигурации
-func Validate(cfg *Config) error {
+// validate проверяет корректность конфигурации
+func validate(cfg *Config) error {
 	if cfg.URL == "" {
 		return fmt.Errorf("URL is required")
 	}
